@@ -3,6 +3,7 @@ import {
   delayBreak,
   eventHandlerController,
   showHUD,
+  HUDController,
   StudyMode
 } from "marginnote"
 import { Addon } from "~/addon"
@@ -10,6 +11,8 @@ import handleExcerpt, { removeLastComment } from "~/JSExtension/handleExcerpt"
 import { layoutViewController } from "~/JSExtension/switchPanel"
 import { isModuleON } from "~/merged"
 import { handleURLScheme } from "~/modules/shortcut/utils"
+import { sendtoai } from "~/modules/aiassistant/utils"
+import { Prompt } from "~/modules/aiassistant/typings"
 import { saveProfile, updateProfileTemp } from "~/profile"
 import handleMagicAction from "./handleMagicAction"
 import lang from "./lang"
@@ -36,7 +39,7 @@ const events = [
 export const eventHandlers = eventHandlerController([...panelEvents, ...events])
 
 export default defineEventHandlers<
-  typeof events[number] | typeof panelEvents[number]["handler"]
+  (typeof events)[number] | (typeof panelEvents)[number]["handler"]
 >({
   async onButtonClick(sender) {
     if (self.window !== MN.currentWindow) return
@@ -96,6 +99,17 @@ export default defineEventHandlers<
       winRect: sender.userInfo.winRect,
       arrow: sender.userInfo.arrow
     }
+
+    const { onSelection } = self.globalProfile.aiassistant
+    if (onSelection) {
+      HUDController.show("Processing")
+      sendtoai(
+        Prompt.Translate,
+        sender.userInfo.documentController.selectionText ?? ""
+      ).then(res => {
+        HUDController.show(res)
+      })
+    }
     dev.log("Popup menu on selection open", "event")
   },
   onClosePopupMenuOnSelection(sender) {
@@ -103,6 +117,11 @@ export default defineEventHandlers<
     self.textSelectBar = undefined
     self.excerptStatus.OCROnlineStatus = "free"
     dev.log("Popup menu on selection close", "event")
+
+    const { onSelection } = self.globalProfile.aiassistant
+    if (onSelection) {
+      HUDController.hidden()
+    }
   },
   async onPopupMenuOnNote(sender) {
     if (self.window !== MN.currentWindow) return

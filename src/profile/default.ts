@@ -180,6 +180,7 @@ export const defaultGlobalProfile = {
   },
   aiassistant: {
     on: false,
+    onSelection: false,
     wordCount: "[10, 5]",
     openaiSecretKey: "",
     openaiURL: "api.openai.com",

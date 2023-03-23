@@ -33,6 +33,25 @@ export default defineConfig({
       }
     },
     {
+      key: "onSelection",
+      type: CellViewType.Switch,
+      label: lang.onSelection,
+      auto: {
+        generateComments: {
+          index: -1,
+          method({ text }) {
+            const request = async () => {
+              const { prompt } = self.globalProfile.aiassistant
+              const defaultPrompt: Prompt = prompt[0]
+              const resp = await sendtoai(defaultPrompt, text)
+              return [resp]
+            }
+            return request()
+          }
+        }
+      }
+    },
+    {
       key: "wordCount",
       type: CellViewType.Input,
       help: lang.word_count

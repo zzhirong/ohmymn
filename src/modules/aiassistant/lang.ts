@@ -4,6 +4,7 @@ export default i18n({
   zh: {
     intro: "使用 OpenAI 辅助摘录",
     on: "摘录时自动执行",
+    onSelection: "选择时自动执行",
     preset: {
       label: "选择需要的预设",
       $option1: ["自定义"] as StringTuple<1>
@@ -49,6 +50,7 @@ export default i18n({
   en: {
     intro: "Using OpenAI to assist in excerpting",
     on: "Auto Run When Excerpting",
+    onSelection: "translate on selection",
     preset: {
       label: "Select Preset",
       $option1: ["Custom"]
