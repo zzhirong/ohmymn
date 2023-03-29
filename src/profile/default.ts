@@ -186,6 +186,7 @@ export const defaultGlobalProfile = {
     openaiURL: "api.openai.com",
     prompt: [0],
     customPrompt: "",
+    doneSelction: true,
     openaiToLang: [0]
   },
   additional: {

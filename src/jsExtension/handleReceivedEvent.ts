@@ -101,13 +101,15 @@ export default defineEventHandlers<
     }
 
     const { onSelection } = self.globalProfile.aiassistant
+    self.globalProfile.aiassistant.doneSelction = false
     if (onSelection) {
-      HUDController.show("Processing")
       sendtoai(
         Prompt.Translate,
         sender.userInfo.documentController.selectionText ?? ""
       ).then(res => {
-        HUDController.show(res)
+        if (!self.globalProfile.aiassistant.doneSelction) {
+          HUDController.show(res)
+        }
       })
     }
     dev.log("Popup menu on selection open", "event")
@@ -122,6 +124,7 @@ export default defineEventHandlers<
     if (onSelection) {
       HUDController.hidden()
     }
+    self.globalProfile.aiassistant.doneSelction = true
   },
   async onPopupMenuOnNote(sender) {
     if (self.window !== MN.currentWindow) return
