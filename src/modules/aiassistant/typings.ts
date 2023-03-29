@@ -3,5 +3,6 @@ export const enum Prompt {
   Polishing,
   Summarize,
   Analyze,
-  ExplainCode
+  ExplainCode,
+  Customization
 }

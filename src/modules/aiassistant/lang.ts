@@ -17,13 +17,21 @@ export default i18n({
       help: "API Key",
       link: ""
     },
+    custom_prompt: "自定义提示",
     openai_to_lang: {
       label: "输出语言",
       $option4: ["简体中文", "繁体英文", "英语", "日语"] as StringTuple<4>
     },
     openai_prompt: {
       label: "功能",
-      $option5: ["翻译", "润色", "总结", "分析", "解释代码"] as StringTuple<5>
+      $option6: [
+        "翻译",
+        "润色",
+        "总结",
+        "分析",
+        "解释代码",
+        "自定义"
+      ] as StringTuple<6>
     },
     no_result: "没有获取到结果",
     process_card: {
@@ -54,6 +62,7 @@ export default i18n({
       help: "API Key",
       link: ""
     },
+    custom_prompt: "Custom prompt",
     openai_to_lang: {
       label: "Output Language",
       $option4: [
@@ -65,13 +74,14 @@ export default i18n({
     },
     openai_prompt: {
       label: "Function",
-      $option5: [
+      $option6: [
         "Translate",
         "Polishing",
         "Summarize",
         "Analyze",
-        "Explain-Code"
-      ] as StringTuple<5>
+        "Explain-Code",
+        "CustomPrompt"
+      ] as StringTuple<6>
     },
     no_result: "No Result",
     process_card: {

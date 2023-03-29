@@ -48,6 +48,11 @@ export default defineConfig({
       help: lang.openai_secretkey.help
     },
     {
+      key: "customPrompt",
+      type: CellViewType.Input,
+      help: lang.custom_prompt
+    },
+    {
       key: "openaiToLang",
       type: CellViewType.Select,
       label: lang.openai_to_lang.label,
@@ -57,7 +62,7 @@ export default defineConfig({
       key: "prompt",
       type: CellViewType.Select,
       label: lang.openai_prompt.label,
-      option: lang.openai_prompt.$option5
+      option: lang.openai_prompt.$option6
     }
   ],
   actions4card: [

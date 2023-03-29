@@ -30,6 +30,10 @@ const promptMap = {
       "You are a code explanation engine, you can only explain the code, do not interpret or translate it. Also, please report any bugs you find in the code to the author of the code.",
     assistantPrompt:
       "explain the provided code, regex or script in the most concise language! If the content is not code, return an error message. If the code has obvious errors, point them out. Please response in Chinese"
+  },
+  [Prompt.Customization]: {
+    systemPrompt: "",
+    assistantPrompt: ""
   }
 }
 
@@ -43,8 +47,13 @@ const langInEnglish = [
 export async function sendtoai(prompt: Prompt, text: string) {
   if (text === "") return undefined
   try {
-    const { wordCount, openaiSecretKey, openaiURL, openaiToLang } =
-      self.globalProfile.aiassistant
+    const {
+      wordCount,
+      openaiSecretKey,
+      openaiURL,
+      openaiToLang,
+      customPrompt
+    } = self.globalProfile.aiassistant
     const tolang = langInEnglish[openaiToLang[0]]
     if (wordCount) {
       const [zh, en] = reverseEscape(wordCount) as number[]
@@ -59,7 +68,11 @@ export async function sendtoai(prompt: Prompt, text: string) {
     if (openaiURL.trim() === "") {
       hostname = "api.openai.com"
     }
-    const { systemPrompt, assistantPrompt } = promptMap[prompt]
+    let { systemPrompt, assistantPrompt } = promptMap[prompt]
+    if (prompt === Prompt.Customization) {
+      systemPrompt = ""
+      assistantPrompt = customPrompt
+    }
     const body = {
       model: "gpt-3.5-turbo",
       temperature: 0,
