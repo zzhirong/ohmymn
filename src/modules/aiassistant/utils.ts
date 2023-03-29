@@ -86,11 +86,11 @@ export async function sendtoai(prompt: Prompt, text: string) {
         },
         {
           role: "user",
-          content: `${assistantPrompt}`
+          content: `Please response in ${tolang}.`
         },
         {
           role: "user",
-          content: `Please response in ${tolang}.`
+          content: `${assistantPrompt}`
         },
         {
           role: "user",
