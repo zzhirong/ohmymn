@@ -5,6 +5,8 @@ export default i18n({
     intro: "使用 OpenAI 辅助摘录",
     on: "摘录时自动执行",
     onSelection: "选择时自动执行",
+    sendtoOpenCat: "发送给 OpenCat",
+    opencatConversation: "OpenCat 会话标题",
     preset: {
       label: "选择需要的预设",
       $option1: ["自定义"] as StringTuple<1>
@@ -45,12 +47,31 @@ export default i18n({
     summarize_text: "总结",
     analyze_text: "解析句子",
     explain_code: "解释代码",
-    no_openai_secretkey: "没有设置OpenAI API Key"
+    no_openai_secretkey: "没有设置OpenAI API Key",
+    chatUI: {
+      switch: "打开 Chat 界面",
+      URL: "Chat 网页地址, 需要自己部署",
+      Link: "https://github.com/zzhirong/ChatGPT-Next-Web-AIAssistant"
+    },
+    chat_ui_width: {
+      label: "chat 界面宽度",
+      $option3: ["窄", "正常", "宽"] as StringTuple<3>
+    },
+    chat_ui_height: {
+      label: "chat 界面高度",
+      $option3: ["短", "正常", "长"] as StringTuple<3>
+    },
+    chat_ui_position: {
+      label: "位置",
+      $option2: ["左", "右"] as StringTuple<2>
+    }
   },
   en: {
     intro: "Using OpenAI to assist in excerpting",
     on: "Auto Run When Excerpting",
     onSelection: "translate on selection",
+    sendtoOpenCat: "Send selection to OpenCat",
+    opencatConversation: "Conversation Title in Opencat.",
     preset: {
       label: "Select Preset",
       $option1: ["Custom"]
@@ -96,6 +117,23 @@ export default i18n({
     analyze_text: "Analyze",
     explain_code: "Explain code",
     loading: "Processing...",
-    no_openai_secretkey: "No API Key"
+    no_openai_secretkey: "No API Key",
+    chatUI: {
+      switch: "Chat On Note",
+      URL: "Chat Web App URL",
+      Link: "https://github.com/zzhirong/ChatGPT-Next-Web-AIAssistant"
+    },
+    chat_ui_width: {
+      label: "Chat UI Width",
+      $option3: ["Narrow", "Normal", "Wide"] as StringTuple<3>
+    },
+    chat_ui_height: {
+      label: "Chat UI Height",
+      $option3: ["Short", "Normal", "Tall"] as StringTuple<3>
+    },
+    chat_ui_position: {
+      label: "Position",
+      $option2: ["Left", "Right"] as StringTuple<2>
+    }
   }
 })

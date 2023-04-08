@@ -187,7 +187,14 @@ export const defaultGlobalProfile = {
     prompt: [0],
     customPrompt: "",
     doneSelction: true,
-    openaiToLang: [0]
+    openaiToLang: [0],
+    sendtoOpenCat: false,
+    openCatConversation: "translate",
+    chatOnNote: false,
+    chatURL: "https://aiassistant-one.vercel.app",
+    chatUIWidth: [0],
+    chatUIHeight: [0],
+    chatUIPosition: [0]
   },
   additional: {
     lastVision: Addon.version,

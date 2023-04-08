@@ -77,6 +77,7 @@ declare global {
     allDocProfile: Record<string, IDocProfile>
     allNotebookProfile: Record<string, INotebookProfile>
     settingViewController: UITableViewController
+    chatViewController: UIWebView
     popoverController: UIPopoverController
   }
 }

@@ -35,21 +35,7 @@ export default defineConfig({
     {
       key: "onSelection",
       type: CellViewType.Switch,
-      label: lang.onSelection,
-      auto: {
-        generateComments: {
-          index: -1,
-          method({ text }) {
-            const request = async () => {
-              const { prompt } = self.globalProfile.aiassistant
-              const defaultPrompt: Prompt = prompt[0]
-              const resp = await sendtoai(defaultPrompt, text)
-              return [resp]
-            }
-            return request()
-          }
-        }
-      }
+      label: lang.onSelection
     },
     {
       key: "wordCount",
@@ -82,6 +68,50 @@ export default defineConfig({
       type: CellViewType.Select,
       label: lang.openai_prompt.label,
       option: lang.openai_prompt.$option6
+    },
+    {
+      key: "sendtoOpenCat",
+      type: CellViewType.Switch,
+      label: lang.sendtoOpenCat
+    },
+    {
+      key: "openCatConversation",
+      type: CellViewType.Input,
+      help: lang.opencatConversation,
+      bind: ["sendtoOpenCat", true]
+    },
+    {
+      key: "chatOnNote",
+      type: CellViewType.Switch,
+      label: lang.chatUI.switch
+    },
+    {
+      key: "chatURL",
+      type: CellViewType.Input,
+      help: lang.chatUI.URL,
+      link: lang.chatUI.Link,
+      bind: ["chatOnNote", true]
+    },
+    {
+      key: "chatUIWidth",
+      type: CellViewType.Select,
+      label: lang.chat_ui_width.label,
+      option: lang.chat_ui_width.$option3,
+      bind: ["chatOnNote", true]
+    },
+    {
+      key: "chatUIHeight",
+      type: CellViewType.Select,
+      label: lang.chat_ui_height.label,
+      option: lang.chat_ui_height.$option3,
+      bind: ["chatOnNote", true]
+    },
+    {
+      key: "chatUIPosition",
+      type: CellViewType.Select,
+      label: lang.chat_ui_position.label,
+      option: lang.chat_ui_position.$option2,
+      bind: ["chatOnNote", true]
     }
   ],
   actions4card: [

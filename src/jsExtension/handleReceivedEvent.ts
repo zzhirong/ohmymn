@@ -4,11 +4,13 @@ import {
   eventHandlerController,
   showHUD,
   HUDController,
-  StudyMode
+  StudyMode,
+  openUrl
 } from "marginnote"
 import { Addon } from "~/addon"
 import handleExcerpt, { removeLastComment } from "~/JSExtension/handleExcerpt"
 import { layoutViewController } from "~/JSExtension/switchPanel"
+import { layoutChatView, layoutChatViewController } from "~/chatController"
 import { isModuleON } from "~/merged"
 import { handleURLScheme } from "~/modules/shortcut/utils"
 import { sendtoai } from "~/modules/aiassistant/utils"
@@ -52,6 +54,11 @@ export default defineEventHandlers<
     if (self.window !== MN.currentWindow) return
     dev.log("Switch the switch", "event")
     const { name, key, status } = sender.userInfo
+    switch (key) {
+      case "chatOnNote":
+        if (!self.chatViewController) layoutChatView()
+        self.chatViewController.view.hidden = !status
+    }
     await saveProfile(name, key, status)
   },
   async onSelectChange(sender) {
@@ -64,6 +71,15 @@ export default defineEventHandlers<
         break
       case "panelHeight":
         layoutViewController(selections[0])
+        break
+      case "chatUIHeight":
+        layoutChatViewController(selections[0])
+        break
+      case "chatUIWidth":
+        layoutChatViewController(undefined, selections[0], undefined)
+        break
+      case "chatUIPosition":
+        layoutChatViewController(undefined, undefined, selections[0])
         break
     }
     await saveProfile(name, key, selections)
@@ -100,13 +116,46 @@ export default defineEventHandlers<
       arrow: sender.userInfo.arrow
     }
 
-    const { onSelection } = self.globalProfile.aiassistant
+    const { onSelection, sendtoOpenCat, openCatConversation, chatOnNote } =
+      self.globalProfile.aiassistant
+    dev.log(
+      "DEBUGPRINT[1]: index.ts:111 (after inonselect: function(webView) )" +
+        Object.prototype.toString.call(self)
+    )
+    const message = sender.userInfo.documentController.selectionText ?? ""
     self.globalProfile.aiassistant.doneSelction = false
+    if (sendtoOpenCat) {
+      openUrl(
+        `opencat://conversations/${openCatConversation}?message=${message}`,
+        true
+      )
+    }
+
+    // showHUD(String(typeof self.chatViewController.view))
+    // let {openaiSecretKey} = self.globalProfile.aiassistant
+    // self.chatViewController.view.evaluateJavaScript(`document.getElementById("chat-input-message").value = "hello"`,
+    // (res)=>{showHUD(res, 3)})
+    // self.chatViewController.view.hidden = false
+
+    // self.chatViewController.evaluateJavaScript(
+    // `javascript
+    // window.onload = function() {
+    // var apiKeyInput = document.getElementById("openai_api_key");
+    // apiKeyInput.value = "${openaiSecretKey}";
+    // };`,
+    // ()=>{}
+    // )
+
+    // const {openaiSecretKey} = self.globalProfile.aiassistant
+    // self.chatViewController.setToken(openaiSecretKey)
+
+    if (chatOnNote) {
+      if (!self.chatViewController) layoutChatView()
+      self.chatViewController.lookup(message)
+    }
+
     if (onSelection) {
-      sendtoai(
-        Prompt.Translate,
-        sender.userInfo.documentController.selectionText ?? ""
-      ).then(res => {
+      sendtoai(Prompt.Translate, message).then(res => {
         if (!self.globalProfile.aiassistant.doneSelction) {
           HUDController.show(res)
         }
