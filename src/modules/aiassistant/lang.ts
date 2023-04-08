@@ -18,6 +18,7 @@ export default i18n({
       link: ""
     },
     custom_prompt: "自定义提示",
+    use_custom_prompt: "使用自定义提示",
     openai_to_lang: {
       label: "输出语言",
       $option4: ["简体中文", "繁体英文", "英语", "日语"] as StringTuple<4>
@@ -63,6 +64,7 @@ export default i18n({
       link: ""
     },
     custom_prompt: "Custom prompt",
+    use_custom_prompt: "Use custom prompt",
     openai_to_lang: {
       label: "Output Language",
       $option4: [

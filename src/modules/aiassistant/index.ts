@@ -172,6 +172,19 @@ export default defineConfig({
           showHUD(String(err), 2)
         }
       }
+    },
+    {
+      key: "use_custom_prompt",
+      type: CellViewType.Button,
+      label: lang.use_custom_prompt,
+      method: async ({ text }) => {
+        try {
+          const resp = await sendtoai(Prompt.Customization, text)
+          return resp
+        } catch (err) {
+          showHUD(String(err), 2)
+        }
+      }
     }
   ]
 })
