@@ -26,6 +26,7 @@ import { removeLastComment } from "./handleExcerpt"
 import { gestureHandlers } from "./handleGestureEvent"
 import { eventHandlers } from "./handleReceivedEvent"
 import { closePanel, layoutViewController } from "./switchPanel"
+import { layoutChatView } from "~/chatController"
 
 /**
  * Addon life cycle
@@ -128,6 +129,7 @@ export default defineLifecycleHandler({
           docmd5
         })
       }
+      if (self.globalProfile.aiassistant.chatOnNote) layoutChatView()
     },
     notebookWillClose(notebookid: string) {
       dev.log("Close a notebook", "lifecycle")

@@ -94,6 +94,10 @@ export default defineEventHandlers<
       case "baiduApiKey":
       case "baiduSecretKey":
         self.globalProfile.additional.autoocr.lastGetToken = 0
+        break
+      case "chatURL":
+        self.chatViewController.openURL(content)
+        break
     }
     await saveProfile(name, key, content)
   },

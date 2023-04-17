@@ -1,4 +1,4 @@
-import { delayBreak } from "marginnote"
+import { delayBreak, showHUD, HUDController } from "marginnote"
 
 export const chatViewController = JSB.defineClass(
   "chatViewController : UIViewController <UIWebViewDelegate>",
@@ -60,7 +60,7 @@ export const chatViewController = JSB.defineClass(
       // self.webView.loadRequest(NSURLRequest.requestWithURL(NSURL.URLWithString('https://chat-mn-note.vercel.app')));
       self.webView.loadRequest(
         NSURLRequest.requestWithURL(
-          NSURL.URLWithString("http://localhost:3000/")
+          NSURL.URLWithString("https://mn-aiassistant-chat.vercel.app")
         )
       )
     },
@@ -74,11 +74,12 @@ export const chatViewController = JSB.defineClass(
       // let viewFrame = self.view.frame;
 
       self.langButton.frame = {
-        x: viewFrame.x + 4,
-        y: viewFrame.y + 4,
+        x: viewFrame.x + 1,
+        y: viewFrame.y + 1,
         width: 30,
         height: 30
       }
+      self.webView.frame = viewFrame
     },
     viewWillDisappear: function (animated) {
       self.webView.stopLoading()
@@ -124,6 +125,14 @@ export const chatViewController = JSB.defineClass(
   }
 )
 
+chatViewController.prototype.openURL = function (
+  url = self.globalProfile.aiassistant.chatURL
+) {
+  this.webView.loadRequest(
+    NSURLRequest.requestWithURL(NSURL.URLWithString(url))
+  )
+}
+
 chatViewController.prototype.lookup = function (text: string) {
   text = text.replace("`", "`")
   const inputId = "input-from-external"
@@ -144,7 +153,8 @@ chatViewController.prototype.setToken = function (text: string) {
     document.getElementById("${inputId}").click();
     `
   let ready = false
-  delayBreak(100, 0.1, () => {
+  HUDController.show("Loading")
+  delayBreak(50, 0.1, () => {
     this.webView.evaluateJavaScript(check, (res: string) => {
       ready = res === "1"
     })
@@ -153,6 +163,7 @@ chatViewController.prototype.setToken = function (text: string) {
     }
     return ready
   })
+  HUDController.hidden()
 }
 
 export function layoutChatView() {
@@ -206,10 +217,10 @@ export function layoutChatViewController(
     width
   }
   self.chatViewController.lastViewFrame = {
-    x: x + 8,
-    y: y + 8,
-    width: 46,
-    height: 46
+    x: x,
+    y: y,
+    width: 32,
+    height: 32
   }
   self.chatViewController.viewWillLayoutSubviews()
 }
