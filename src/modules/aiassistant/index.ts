@@ -73,11 +73,11 @@ export default defineConfig({
       help: lang.process_card.help,
       method: async ({ nodes }) => {
         try {
-          function getTranslatedText(text?: string) {
+          async function getTranslatedText(text?: string) {
             const { prompt } = self.globalProfile.aiassistant
             const defaultPrompt: Prompt = prompt[0]
-            if (text) return sendtoai(defaultPrompt, text)
-            else return ""
+            const result = text ? await sendtoai(defaultPrompt, text) : ""
+            return result
           }
 
           const allTranslation: string[][] = []
